@@ -3,9 +3,9 @@ import * as bodyParser from "body-parser";
 import express from "express";
 import session from "express-session";
 import { Request, Response } from "express";
+import fetch from 'node-fetch';
 
 const path = require("path");
-const cors = require("cors");
 class App {
   public app: express.Application;
   public consentUrl: Promise<string>
@@ -20,11 +20,6 @@ class App {
   }
 
   private config(): void {
-    var corsOptions = {
-      origin: "http://localhost:8081" // or any other port?
-    };
-		
-    this.app.use(cors(corsOptions));
     this.app.use(bodyParser.json());
     this.app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -43,8 +38,12 @@ class App {
     const router = express.Router();
     
     router.get("/", async (req: Request, res: Response) => {
+
+      const response = await fetch('https://gist.githubusercontent.com/SerKnight/1218dbf3e4f752aec91c8b0ad2a5542b/raw/ecd1c45975a84947b326f3ee75c9ad07da020aeb/data.json');
+      const json = await response.json();
+
       res.render("home", { 
-        key: 'value'
+        data: json
       });
     });
 
