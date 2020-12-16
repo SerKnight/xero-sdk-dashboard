@@ -54,12 +54,6 @@ class App {
     }));
 
     this.app.use("/", router);
-
-    const PORT = 8080;
-
-    this.app.listen(PORT, () => {
-      console.log(`App listening on port ${PORT}`);
-    });
   }
 }
 
